@@ -17,7 +17,7 @@ import {
 } from './routes/retailers.js';
 import {
     handleCreateOrder, handleGetOrders, handleGetOrder,
-    handleUpdateOrderStatus, handleExportOrders,
+    handleUpdateOrderStatus, handleExportOrders, handleUpdateOrder,
 } from './routes/orders.js';
 import {
     handleDailyReport, handleMonthlyReport, handleYearlyReport,
@@ -124,6 +124,7 @@ export default {
                     const p = matchRoute('/orders/:id', apiPath);
                     if (p) {
                         if (method === 'GET') return handleGetOrder(request, env, user, p);
+                        if (method === 'PUT') return handleUpdateOrder(request, env, user, p);
                     }
                 }
                 {
