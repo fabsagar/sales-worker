@@ -20,10 +20,6 @@ database_id = "51098516-2a4b-4ce7-b753-bfc4620dbb1c"
 binding = "IMAGES"
 bucket_name = "sales-product-images"
 
-[[services]]
-binding = "LICENSE"
-service = "license"
-
 [triggers]
 crons = []
 
