@@ -1,0 +1,38 @@
+name = "sales-management-api"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+JWT_SECRET = "change-this-to-a-secure-random-string-in-production"
+APP_ENV = "production"
+LICENSE_KEY = "ABC-123"
+LICENSE_SECRET = "super-secret-key"
+LICENSE_SERVER_URL = "https://license.retailer-sales.workers.dev/validate"
+GOOGLE_CLIENT_ID = "938440224317-l5arlpo9r92palggdh22vu9o49k5fill.apps.googleusercontent.com"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "demo-db"
+database_id = "51098516-2a4b-4ce7-b753-bfc4620dbb1c"
+
+[[r2_buckets]]
+binding = "IMAGES"
+bucket_name = "sales-product-images"
+
+[[services]]
+binding = "LICENSE"
+service = "license"
+
+[triggers]
+crons = []
+
+# For local development
+[dev]
+port = 8787
+local_protocol = "http"
+
+[observability]
+[observability.logs]
+enabled = true
+invocation_logs = true
