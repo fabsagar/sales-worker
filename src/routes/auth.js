@@ -6,21 +6,34 @@ async function validateLicense(env) {
         const secret = "super-secret-key";
         const key = "ABC-123";
 
-        console.log(`[License] Calling internal service binding`);
-        console.log("Calling LICENSE binding...");
+        console.log(`[License] Calling internal service binding or external URL`);
         console.log("env.LICENSE exists:", !!env.LICENSE);
-        const response = await env.LICENSE.fetch(
-            new Request("https://license/validate", {
+        
+        let response;
+        if (env.LICENSE) {
+            // Use Service Binding (same account)
+            response = await env.LICENSE.fetch(
+                new Request("https://license/validate", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-secret": secret
+                    },
+                    body: JSON.stringify({ license_key: key })
+                })
+            );
+        } else {
+            // Use Standard HTTPS Fetch (cross-account)
+            const url = env.LICENSE_SERVER_URL || "https://license.retailer-sales.workers.dev/validate";
+            response = await fetch(url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "x-secret": secret
                 },
-                body: JSON.stringify({
-                    license_key: key
-                })
-            })
-        );
+                body: JSON.stringify({ license_key: key })
+            });
+        }
 
         console.log(`[License] Status: ${response.status}`);
 
